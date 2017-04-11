@@ -124,14 +124,13 @@ def yuv2rgb(y, u, v):
 #####               Read command line args
 #####
 def ReadCLArgs(thisDir):
-    if(len(sys.argv) < 4):
+    if(len(sys.argv) < 3):
         print('not enough command line args, errors happen now:')
 
-    inputImage = thisDir + "/" + sys.argv[1] 
-    outputImage = thisDir + "/" + sys.argv[2] 
-    algo = sys.argv[3] 
+    templateFolder = thisDir + "/" + sys.argv[1] 
+    imageToSearch = thisDir + "/" + sys.argv[2] 
 
-    return inputImage, outputImage, algo
+    return templateFolder, imageToSearch 
 
 
 
