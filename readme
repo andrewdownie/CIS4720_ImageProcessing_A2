@@ -1,0 +1,9 @@
+To run this program, type: python findWally.py
+
+The mahotas library is required: pip install mahotas
+
+To change what the input image to search is, change line 6: wally = mahotas.imread('images/wheresWaldo1.jpg')
+
+Psuedo code, and the thoroughly commented code are available at: https://andrewdownie.github.io/CIS4720_ImageProcessing_A2/
+
+The pattern matching portion of this code is directly based of this stack overflow post: http://stackoverflow.com/questions/8849869/how-do-i-find-wally-with-python

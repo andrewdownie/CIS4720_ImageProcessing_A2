@@ -60,8 +60,6 @@ for image in image_list:
     temp_height = temp_r.shape[0]
     print(str(temp_width) + " " + str(temp_height))
 
-    #print("Trav width: " + str(img_width - temp_width))
-    #print("Trav height: " + str(img_height - temp_height))
 
     searchWidth = img_width - temp_width
     searchHeight = img_height - temp_height
@@ -94,12 +92,6 @@ for image in image_list:
 
 
 
-#####
-#####               Output the image
-#####
-#print("\nsaving image...\n")
-#imageIO.imwrite_colour(outputImage, new_r, new_g, new_b)
-#print("\nDone saving image...\n")
 print("Exiting...\n")
 
                         
