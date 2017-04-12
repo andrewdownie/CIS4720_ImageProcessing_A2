@@ -4,7 +4,7 @@ from pprint import pprint
 from pylab import imshow, show
 import numpy as np
 import mahotas
-wally = mahotas.imread('images/wheresWaldo2.jpg')
+wally = mahotas.imread('images/wheresWaldo1.jpg')
 
 wfloat = wally.astype(float)
 r,g,b = wfloat.transpose((2,0,1))
@@ -14,13 +14,10 @@ r,g,b = wfloat.transpose((2,0,1))
 colCount = int(wally.shape[0])
 rowCount = int(wally.shape[1])
 
-img_r = np.zeros((colCount, rowCount))
-img_g = np.zeros((colCount, rowCount))
-img_b = np.zeros((colCount, rowCount))
 
 
 
-
+#Push 'reddish' colours to 100% red
 for col in range(colCount):
     for row in range(rowCount):
         
@@ -29,6 +26,7 @@ for col in range(colCount):
             g[col, row] = 0
             b[col, row] = 0
 
+#Push whitish colours to 100% white, leave 100% red untouched, and push everything else to black
 for col in range(colCount):
     for row in range(rowCount):
         
@@ -82,45 +80,46 @@ for col in range(1, colCount - 1):
                 g[col, row] = 0
                 b[col, row] = 0
 
-#turn all blacks into reds
-#for col in range(1, colCount - 1):
-#    for row in range(1, rowCount - 1):
-        
-#        if(r[col, row] == 0 and g[col, row] == 0 and b[col, row] == 0):
-#            r[col, row] = 255
 
-
-#turn surrounded reds into whites 
+#turn nearby blacks into reds
 for col in range(1, colCount - 1):
     for row in range(1, rowCount - 1):
-        whiteCount = 0
         
         if(r[col, row] == 255 and g[col, row] == 0 and b[col, row] == 0):
-            if(b[col, row + 1] == 255):
-                whiteCount += 1
-            if(b[col + 1, row + 1] == 255):
-                whiteCount += 1
-            if(b[col + 1, row] == 255):
-                whiteCount += 1
-            if(b[col + 1, row - 1] == 255):
-                whiteCount += 1
-            if(b[col, row - 1] == 255):
-                whiteCount += 1
-            if(b[col - 1, row - 1] == 255):
-                whiteCount += 1
-            if(b[col - 1, row] == 255):
-                whiteCount += 1
-            if(b[col - 1, row + 1] == 255):
-                whiteCount += 1
-
-            if(whiteCount >= 7):
+            if(r[col, row + 1] == 0):
                 r[col, row] = 255
-                b[col, row] = 255
-                g[col, row] = 255 
+                g[col, row] = 0
+                b[col, row] = 0
+            if(r[col + 1, row + 1] == 0):
+                r[col, row] = 255
+                g[col, row] = 0
+                b[col, row] = 0
+            if(r[col + 1, row] == 0):
+                r[col, row] = 255
+                g[col, row] = 0
+                b[col, row] = 0
+            if(r[col + 1, row - 1] == 0):
+                r[col, row] = 255
+                g[col, row] = 0
+                b[col, row] = 0
+            if(r[col, row - 1] == 0):
+                r[col, row] = 255
+                g[col, row] = 0
+                b[col, row] = 0
+            if(r[col - 1, row - 1] == 0):
+                r[col, row] = 255
+                g[col, row] = 0
+                b[col, row] = 0
+            if(r[col - 1, row] == 0):
+                r[col, row] = 255
+                g[col, row] = 0
+                b[col, row] = 0
+            if(r[col - 1, row + 1] == 0):
+                r[col, row] = 255
+                g[col, row] = 0
+                b[col, row] = 0
 
-            
-
-wally = np.zeros((img_r.shape[0],img_r.shape[1],3), 'uint8')
+wally = np.zeros((r.shape[0],r.shape[1],3), 'uint8')
 wally[..., 0] = r
 wally[..., 1] = g
 wally[..., 2] = b
@@ -129,20 +128,20 @@ wally[..., 2] = b
 #show()
 #sys.exit()
 
-w = wfloat.mean(2)
+wfloat = wally.astype(float)
+r,g,b = wfloat.transpose((2,0,1))
 
 pattern = np.ones((32,24), float)
 
 for i in xrange(2):
-    pattern[i::6] = -1
+    pattern[i::8] = -1
 
 
-v = mahotas.convolve(r-w, pattern)
+w = wfloat.mean(2)
+v = mahotas.convolve(r - w, pattern)
 
 mask = (v == v.max())
-#mask = (v >= v.max())
-mask = mahotas.dilate(mask, np.ones((48, 48)))
-#pprint(mask)
+mask = mahotas.dilate(mask, np.ones((10, 20)))
 
 wally -= (.8*wally * ~mask[:,:,None]).astype('uint8')
 imshow(wally)
