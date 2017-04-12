@@ -83,39 +83,12 @@ for col in range(1, colCount - 1):
                 b[col, row] = 0
 
 #turn all blacks into reds
-for col in range(1, colCount - 1):
-    for row in range(1, rowCount - 1):
+#for col in range(1, colCount - 1):
+#    for row in range(1, rowCount - 1):
         
-        if(r[col, row] == 0 and g[col, row] == 0 and b[col, row] == 0):
-            r[col, row] = 255
+#        if(r[col, row] == 0 and g[col, row] == 0 and b[col, row] == 0):
+#            r[col, row] = 255
 
-#turn surrounded reds into whites 
-for col in range(1, colCount - 1):
-    for row in range(1, rowCount - 1):
-        redCount = 0
-        
-        if(r[col, row] == 255 and g[col, row] == 0 and b[col, row] == 0):
-            if(r[col, row + 1] == 0 and b[col, row + 1] == 0):
-                redCount += 1
-            if(r[col + 1, row + 1] == 0 and b[col + 1, row + 1] == 0):
-                redCount += 1
-            if(r[col + 1, row] == 0 and b[col + 1, row] == 0):
-                redCount += 1
-            if(r[col + 1, row - 1] == 0 and b[col + 1, row - 1] == 0):
-                redCount += 1
-            if(r[col, row - 1] == 0 and b[col, row - 1] == 0):
-                redCount += 1
-            if(r[col - 1, row - 1] == 0 and b[col - 1, row - 1] == 0):
-                redCount += 1
-            if(r[col - 1, row] == 0 and b[col - 1, row] == 0):
-                redCount += 1
-            if(r[col - 1, row + 1] == 0 and r[col - 1, row + 1] == 0):
-                redCount += 1
-
-            if(redCount >= 7):
-                r[col, row] = 255
-                b[col, row] = 255
-                g[col, row] = 255 
 
 #turn surrounded reds into whites 
 for col in range(1, colCount - 1):
@@ -168,7 +141,7 @@ v = mahotas.convolve(r-w, pattern)
 
 mask = (v == v.max())
 #mask = (v >= v.max())
-mask = mahotas.dilate(mask, np.ones((32, 16)))
+mask = mahotas.dilate(mask, np.ones((48, 48)))
 #pprint(mask)
 
 wally -= (.8*wally * ~mask[:,:,None]).astype('uint8')
