@@ -3,7 +3,7 @@
 #####               Image-name, location and extensions
 #####
 templateFolderRelPath="templateImages/"
-imageToSearch="wheresWaldo2.jpg"
+imageToSearch="wheresWaldo5.jpg"
 relPath="images/" #relative to the script being run
 
 
